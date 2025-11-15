@@ -163,6 +163,13 @@ const Messages = () => {
     return conversation.requester_profile?.display_name || 'Requester';
   };
 
+  const getConversationPreview = (conversation: Conversation) => {
+    if (currentUserId === conversation.requester_id) {
+      return `Hi, I've requested for this ${conversation.items?.title}`;
+    }
+    return conversation.items?.title;
+  };
+
   const selectedConv = conversations.find(c => c.id === selectedConversation);
 
   if (loading) {
@@ -206,7 +213,7 @@ const Messages = () => {
                     >
                       <p className="font-semibold mb-1">{getOtherUserName(conversation)}</p>
                       <p className="text-sm text-muted-foreground truncate">
-                        {conversation.items?.title}
+                        {getConversationPreview(conversation)}
                       </p>
                     </button>
                   ))
