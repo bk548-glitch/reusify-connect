@@ -45,8 +45,9 @@ const Upload = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuggestingCategory, setIsSuggestingCategory] = useState(false);
   const [locationOpen, setLocationOpen] = useState(false);
-  const [currentCoords, setCurrentCoords] = useState<{ latitude: number; longitude: number } | null>(null);
+  const [currentLocation, setCurrentLocation] = useState<string | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
+  const [isGettingLocation, setIsGettingLocation] = useState(true);
 
   useEffect(() => {
     // Set up auth state listener
@@ -78,27 +79,48 @@ const Upload = () => {
     // Get user's current location
     if ("geolocation" in navigator) {
       const watchId = navigator.geolocation.watchPosition(
-        (position) => {
-          setCurrentCoords({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-          });
-          setLocationError(null);
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          
+          try {
+            // Reverse geocode to get city and state
+            const response = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+            );
+            const data = await response.json();
+            
+            const city = data.address.city || data.address.town || data.address.village || data.address.county;
+            const state = data.address.state;
+            
+            if (city && state) {
+              setCurrentLocation(`${city}, ${state}`);
+            } else {
+              setCurrentLocation("Location detected but unable to determine city/state");
+            }
+            setLocationError(null);
+            setIsGettingLocation(false);
+          } catch (error) {
+            console.error("Error reverse geocoding:", error);
+            setLocationError("Unable to determine location details");
+            setIsGettingLocation(false);
+          }
         },
         (error) => {
           setLocationError(error.message);
+          setIsGettingLocation(false);
           console.error("Error getting location:", error);
         },
         {
           enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0
+          timeout: 10000,
+          maximumAge: 30000
         }
       );
 
       return () => navigator.geolocation.clearWatch(watchId);
     } else {
       setLocationError("Geolocation is not supported by your browser");
+      setIsGettingLocation(false);
     }
   }, []);
 
@@ -404,20 +426,19 @@ const Upload = () => {
               <Card className="p-4 bg-muted/50">
                 {locationError ? (
                   <p className="text-sm text-destructive">{locationError}</p>
-                ) : currentCoords ? (
+                ) : isGettingLocation ? (
+                  <p className="text-sm text-muted-foreground">Detecting your location...</p>
+                ) : currentLocation ? (
                   <div className="space-y-1">
-                    <p className="text-sm text-muted-foreground">
-                      <span className="font-medium">Latitude:</span> {currentCoords.latitude.toFixed(6)}
+                    <p className="text-base font-medium">
+                      📍 {currentLocation}
                     </p>
-                    <p className="text-sm text-muted-foreground">
-                      <span className="font-medium">Longitude:</span> {currentCoords.longitude.toFixed(6)}
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-2">
-                      📍 Location updates in real-time
+                    <p className="text-xs text-muted-foreground">
+                      Location updates automatically
                     </p>
                   </div>
                 ) : (
-                  <p className="text-sm text-muted-foreground">Getting your location...</p>
+                  <p className="text-sm text-muted-foreground">Unable to detect location</p>
                 )}
               </Card>
             </div>
