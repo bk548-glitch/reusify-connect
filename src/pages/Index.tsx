@@ -51,9 +51,12 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Stats Section */}
+      {/* Impact Metrics */}
       <section className="py-12 bg-accent">
         <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center mb-8 text-foreground">
+            Impact Metrics
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
               <div className="text-4xl font-bold text-primary mb-2">10K+</div>
@@ -124,45 +127,6 @@ const Index = () => {
               </p>
             </CardContent>
           </Card>
-        </div>
-      </section>
-
-      {/* Impact Metrics */}
-      <section className="py-20 container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12 text-foreground">
-          Impact Metrics
-        </h2>
-        
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card>
-              <CardContent className="pt-6 pb-6 text-center">
-                <div className="text-3xl font-bold text-primary mb-2">147 items</div>
-                <div className="text-sm text-muted-foreground">diverted from landfills</div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent className="pt-6 pb-6 text-center">
-                <div className="text-3xl font-bold text-primary mb-2">63</div>
-                <div className="text-sm text-muted-foreground">successful exchanges facilitated</div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent className="pt-6 pb-6 text-center">
-                <div className="text-3xl font-bold text-primary mb-2">87%</div>
-                <div className="text-sm text-muted-foreground">of items reused within 48 hours</div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent className="pt-6 pb-6 text-center">
-                <div className="text-3xl font-bold text-primary mb-2">2.4×</div>
-                <div className="text-sm text-muted-foreground">increase in reuse actions vs traditional platforms</div>
-              </CardContent>
-            </Card>
-          </div>
         </div>
       </section>
 
