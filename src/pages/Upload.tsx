@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/card";
 import { ArrowLeft, Upload as UploadIcon, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { User, Session } from "@supabase/supabase-js";
 
 const categories = [
   "Furniture",
@@ -25,25 +26,106 @@ const categories = [
 
 const Upload = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     category: "",
     location: "",
+    quantity: 1,
     image: null as File | null
   });
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+        
+        if (!session?.user) {
+          navigate("/auth");
+        }
+      }
+    );
+
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      
+      if (!session?.user) {
+        navigate("/auth");
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!user) {
+      toast.error("You must be logged in to list items");
+      navigate("/auth");
+      return;
+    }
     
     if (!formData.title || !formData.category || !formData.location) {
       toast.error("Please fill in all required fields");
       return;
     }
 
-    toast.success("Item listed successfully!");
-    navigate("/browse");
+    setIsSubmitting(true);
+
+    try {
+      let imageUrl = null;
+
+      // Upload image if present
+      if (formData.image) {
+        const fileExt = formData.image.name.split('.').pop();
+        const fileName = `${user.id}/${Math.random()}.${fileExt}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from('item-images')
+          .upload(fileName, formData.image);
+
+        if (uploadError) throw uploadError;
+
+        // Get public URL
+        const { data: { publicUrl } } = supabase.storage
+          .from('item-images')
+          .getPublicUrl(fileName);
+          
+        imageUrl = publicUrl;
+      }
+
+      // Insert item into database
+      const { error: insertError } = await supabase
+        .from('items')
+        .insert({
+          user_id: user.id,
+          title: formData.title,
+          description: formData.description,
+          category: formData.category,
+          location: formData.location,
+          quantity: formData.quantity,
+          image_url: imageUrl
+        });
+
+      if (insertError) throw insertError;
+
+      toast.success("Item listed successfully!");
+      navigate("/browse");
+    } catch (error) {
+      console.error('Error listing item:', error);
+      toast.error("Failed to list item. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,6 +159,7 @@ const Upload = () => {
           ...formData,
           description: data.description,
           category: data.tags[0] || formData.category,
+          quantity: data.quantity || formData.quantity
         });
         
         toast.success("Description generated from image!");
@@ -188,6 +271,18 @@ const Upload = () => {
             </div>
 
             <div className="space-y-2">
+              <Label htmlFor="quantity">Quantity</Label>
+              <Input
+                id="quantity"
+                type="number"
+                min="1"
+                placeholder="1"
+                value={formData.quantity}
+                onChange={(e) => setFormData({ ...formData, quantity: parseInt(e.target.value) || 1 })}
+              />
+            </div>
+
+            <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="description">Description</Label>
                 <Button
@@ -243,8 +338,8 @@ const Upload = () => {
               )}
             </div>
 
-            <Button type="submit" className="w-full" size="lg">
-              List Item
+            <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
+              {isSubmitting ? "Listing Item..." : "List Item"}
             </Button>
           </form>
         </Card>
