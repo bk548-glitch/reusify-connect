@@ -25,6 +25,34 @@ const categories = [
   "Other"
 ];
 
+const locations = [
+  "New York, NY",
+  "Los Angeles, CA",
+  "Chicago, IL",
+  "Houston, TX",
+  "Phoenix, AZ",
+  "Philadelphia, PA",
+  "San Antonio, TX",
+  "San Diego, CA",
+  "Dallas, TX",
+  "San Jose, CA",
+  "Austin, TX",
+  "Jacksonville, FL",
+  "Fort Worth, TX",
+  "Columbus, OH",
+  "San Francisco, CA",
+  "Charlotte, NC",
+  "Indianapolis, IN",
+  "Seattle, WA",
+  "Denver, CO",
+  "Boston, MA",
+  "Portland, OR",
+  "Miami, FL",
+  "Atlanta, GA",
+  "Detroit, MI",
+  "Minneapolis, MN"
+];
+
 const Upload = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
@@ -327,13 +355,22 @@ const Upload = () => {
 
             <div className="space-y-2">
               <Label htmlFor="location">Location *</Label>
-              <Input
-                id="location"
-                placeholder="e.g., Brooklyn, NY"
+              <Select
                 value={formData.location}
-                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                onValueChange={(value) => setFormData({ ...formData, location: value })}
                 required
-              />
+              >
+                <SelectTrigger id="location" className="bg-background">
+                  <SelectValue placeholder="Select a location" />
+                </SelectTrigger>
+                <SelectContent className="bg-background z-50">
+                  {locations.map((loc) => (
+                    <SelectItem key={loc} value={loc}>
+                      {loc}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-2">
