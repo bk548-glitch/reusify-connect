@@ -8,13 +8,46 @@ import billImage from "@/assets/bill.jpeg";
 import himaniImage from "@/assets/himani.jpg";
 import bhavaniImage from "@/assets/bhavani.jpeg";
 import { Header } from "@/components/Header";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
+import { User } from "@supabase/supabase-js";
 
 const Index = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    // Check current session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      {user ? (
+        <Header />
+      ) : (
+        <header className="sticky top-0 z-50 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60 border-b border-border">
+          <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div className="text-xl font-bold text-primary">ReUse</div>
+            <Button
+              variant="default"
+              size="sm"
+              onClick={() => navigate("/auth")}
+            >
+              Sign In
+            </Button>
+          </div>
+        </header>
+      )}
       {/* Hero Section */}
       <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
         <div 
