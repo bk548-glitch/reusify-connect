@@ -123,10 +123,9 @@ const ItemDetail = () => {
       }
 
       if (conversation) {
-        // Send an automatic initial message from the requester
-        const initialMessage = item?.image_url 
-          ? `Hi, I am interested in the ${item.title}.\n\nItem: ${item.title}\nImage: ${item.image_url}`
-          : `Hi, I am interested in the ${item?.title}.`;
+        // Send an automatic initial message from the requester with a clickable link
+        const itemLink = `${window.location.origin}/item/${id}`;
+        const initialMessage = `Hi, I've requested for this item:\n${itemLink}`;
         
         const { error: messageError } = await supabase
           .from('messages')
