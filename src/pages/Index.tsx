@@ -162,8 +162,12 @@ const Index = () => {
 
           <Card className="text-center">
             <CardContent className="pt-8 pb-6">
-              <div className="w-32 h-32 bg-muted rounded-full mx-auto mb-4 flex items-center justify-center">
-                <span className="text-4xl text-muted-foreground">BP</span>
+              <div className="w-32 h-32 rounded-full mx-auto mb-4 overflow-hidden">
+                <img 
+                  src="https://drive.google.com/uc?export=view&id=1Erl5DhhUjF86mjSQqr2uLmYbaLrVaH3e" 
+                  alt="Bill Park"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <h3 className="text-lg font-semibold mb-1">Bill Park</h3>
               <p className="text-sm text-muted-foreground">Co-founder</p>
@@ -173,8 +177,12 @@ const Index = () => {
 
           <Card className="text-center">
             <CardContent className="pt-8 pb-6">
-              <div className="w-32 h-32 bg-muted rounded-full mx-auto mb-4 flex items-center justify-center">
-                <span className="text-4xl text-muted-foreground">VK</span>
+              <div className="w-32 h-32 rounded-full mx-auto mb-4 overflow-hidden">
+                <img 
+                  src="https://drive.google.com/uc?export=view&id=1HVbyDJONfdLLaTMhEnSsLIAO9yhonKV4" 
+                  alt="Vijay Krishnamoorthy"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <h3 className="text-lg font-semibold mb-1">Vijay Krishnamoorthy</h3>
               <p className="text-sm text-muted-foreground">Co-founder</p>
