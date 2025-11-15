@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { ArrowLeft, Search, MapPin } from "lucide-react";
+import { ArrowLeft, Search, MapPin, Sparkles } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const categories = [
   "All",
@@ -73,15 +75,77 @@ const mockItems = [
 
 const Browse = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [isAiSearching, setIsAiSearching] = useState(false);
+  const [aiRankedIds, setAiRankedIds] = useState<number[]>([]);
 
-  const filteredItems = mockItems.filter(item => {
-    const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
-    const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         item.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  const handleAiSearch = async () => {
+    if (!searchQuery.trim()) {
+      toast({
+        title: "Enter a search query",
+        description: "Please type what you're looking for",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsAiSearching(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('ai-search', {
+        body: { 
+          query: searchQuery,
+          items: mockItems 
+        }
+      });
+
+      if (error) throw error;
+
+      setAiRankedIds(data.rankedIds || []);
+      toast({
+        title: "AI Search Complete",
+        description: `Found ${data.rankedIds?.length || 0} relevant items`
+      });
+    } catch (error) {
+      console.error('AI search error:', error);
+      toast({
+        title: "Search failed",
+        description: "Could not complete AI search. Try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsAiSearching(false);
+    }
+  };
+
+  const filteredItems = (() => {
+    let items = mockItems.filter(item => {
+      const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
+      return matchesCategory;
+    });
+
+    // If AI search has results, sort by AI ranking
+    if (aiRankedIds.length > 0) {
+      items = items.sort((a, b) => {
+        const aIndex = aiRankedIds.indexOf(a.id);
+        const bIndex = aiRankedIds.indexOf(b.id);
+        
+        if (aIndex === -1 && bIndex === -1) return 0;
+        if (aIndex === -1) return 1;
+        if (bIndex === -1) return -1;
+        return aIndex - bIndex;
+      }).filter(item => aiRankedIds.includes(item.id));
+    } else if (searchQuery) {
+      // Regular keyword search
+      items = items.filter(item => 
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    return items;
+  })();
 
   return (
     <div className="min-h-screen bg-background">
@@ -101,14 +165,28 @@ const Browse = () => {
             </Button>
           </div>
 
-          <div className="relative mb-4">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search materials..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
+          <div className="flex gap-2 mb-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search materials..."
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setAiRankedIds([]);
+                }}
+                onKeyDown={(e) => e.key === 'Enter' && handleAiSearch()}
+                className="pl-10"
+              />
+            </div>
+            <Button 
+              onClick={handleAiSearch}
+              disabled={isAiSearching}
+              className="gap-2"
+            >
+              <Sparkles className="h-4 w-4" />
+              {isAiSearching ? "Searching..." : "AI Search"}
+            </Button>
           </div>
 
           <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
