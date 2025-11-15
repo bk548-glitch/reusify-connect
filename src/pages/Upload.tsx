@@ -157,12 +157,10 @@ const Upload = () => {
 
         if (error) throw error;
 
-        setFormData({
-          ...formData,
-          description: data.description,
-          category: data.tags[0] || formData.category,
-          quantity: data.quantity || formData.quantity
-        });
+      setFormData({
+        ...formData,
+        description: data.description
+      });
         
         toast.success("Description generated from image!");
       };
