@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { User, Session } from "@supabase/supabase-js";
 import { Header } from "@/components/Header";
-import { US_CITIES } from "@/data/usCities";
+import { US_CITIES } from "@/data/usStates";
 import { cn } from "@/lib/utils";
 
 const categories = [

@@ -11,7 +11,7 @@ import { User, Session } from "@supabase/supabase-js";
 import { Leaf, Check, ChevronsUpDown } from "lucide-react";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { US_CITIES } from "@/data/usCities";
+import { US_CITIES } from "@/data/usStates";
 import { cn } from "@/lib/utils";
 
 const Auth = () => {
