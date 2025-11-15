@@ -108,15 +108,19 @@ const ItemDetail = () => {
       if (requestError) throw requestError;
 
       // Wait a moment for the database trigger to create the conversation
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
       // Find the conversation that was just created
-      const { data: conversation } = await supabase
+      const { data: conversation, error: convError } = await supabase
         .from('conversations')
         .select('id')
         .eq('item_id', id)
         .eq('requester_id', user.id)
         .single();
+
+      if (convError) {
+        console.error('Error finding conversation:', convError);
+      }
 
       if (conversation) {
         // Send an automatic initial message from the requester
@@ -124,13 +128,21 @@ const ItemDetail = () => {
           ? `Hi, I am interested in the ${item.title}.\n\nItem: ${item.title}\nImage: ${item.image_url}`
           : `Hi, I am interested in the ${item?.title}.`;
         
-        await supabase
+        const { error: messageError } = await supabase
           .from('messages')
           .insert({
             conversation_id: conversation.id,
             sender_id: user.id,
             content: initialMessage
           });
+
+        if (messageError) {
+          console.error('Error creating initial message:', messageError);
+        } else {
+          console.log('Initial message created successfully');
+        }
+      } else {
+        console.error('Conversation not found after creation');
       }
 
       toast.success("Request sent! Check your messages to chat with the owner.");
