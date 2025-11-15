@@ -5,6 +5,7 @@ import { Recycle, Search, MessageCircle, Heart } from "lucide-react";
 import heroImage from "@/assets/hero-reuse.jpg";
 import vijayImage from "@/assets/vijay.jpeg";
 import billImage from "@/assets/bill.jpeg";
+import himaniImage from "@/assets/himani.jpg";
 import { Header } from "@/components/Header";
 
 const Index = () => {
@@ -194,8 +195,12 @@ const Index = () => {
 
           <Card className="text-center">
             <CardContent className="pt-8 pb-6">
-              <div className="w-32 h-32 bg-muted rounded-full mx-auto mb-4 flex items-center justify-center">
-                <span className="text-4xl text-muted-foreground">HA</span>
+              <div className="w-32 h-32 rounded-full mx-auto mb-4 overflow-hidden">
+                <img 
+                  src={himaniImage} 
+                  alt="Himani Agarwal"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <h3 className="text-lg font-semibold mb-1">Himani Agarwal</h3>
               <p className="text-sm text-muted-foreground">Co-founder</p>
