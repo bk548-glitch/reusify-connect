@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Sparkles, MapPin, Package, ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { Header } from "@/components/Header";
 
 interface Item {
   id: string;
@@ -99,6 +100,7 @@ const Browse = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       <header className="border-b border-border bg-card">
         <div className="container mx-auto px-4 py-4">
           <Button
