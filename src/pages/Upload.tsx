@@ -6,11 +6,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, Upload as UploadIcon, Sparkles } from "lucide-react";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { ArrowLeft, Upload as UploadIcon, Sparkles, Check, ChevronsUpDown } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { User, Session } from "@supabase/supabase-js";
 import { Header } from "@/components/Header";
+import { US_CITIES } from "@/data/usCities";
+import { cn } from "@/lib/utils";
 
 const categories = [
   "Furniture",
@@ -23,34 +27,6 @@ const categories = [
   "Books",
   "Toys",
   "Other"
-];
-
-const locations = [
-  "New York, NY",
-  "Los Angeles, CA",
-  "Chicago, IL",
-  "Houston, TX",
-  "Phoenix, AZ",
-  "Philadelphia, PA",
-  "San Antonio, TX",
-  "San Diego, CA",
-  "Dallas, TX",
-  "San Jose, CA",
-  "Austin, TX",
-  "Jacksonville, FL",
-  "Fort Worth, TX",
-  "Columbus, OH",
-  "San Francisco, CA",
-  "Charlotte, NC",
-  "Indianapolis, IN",
-  "Seattle, WA",
-  "Denver, CO",
-  "Boston, MA",
-  "Portland, OR",
-  "Miami, FL",
-  "Atlanta, GA",
-  "Detroit, MI",
-  "Minneapolis, MN"
 ];
 
 const Upload = () => {
@@ -68,6 +44,7 @@ const Upload = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuggestingCategory, setIsSuggestingCategory] = useState(false);
+  const [locationOpen, setLocationOpen] = useState(false);
 
   useEffect(() => {
     // Set up auth state listener
@@ -355,22 +332,47 @@ const Upload = () => {
 
             <div className="space-y-2">
               <Label htmlFor="location">Location *</Label>
-              <Select
-                value={formData.location}
-                onValueChange={(value) => setFormData({ ...formData, location: value })}
-                required
-              >
-                <SelectTrigger id="location" className="bg-background">
-                  <SelectValue placeholder="Select a location" />
-                </SelectTrigger>
-                <SelectContent className="bg-background z-50">
-                  {locations.map((loc) => (
-                    <SelectItem key={loc} value={loc}>
-                      {loc}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Popover open={locationOpen} onOpenChange={setLocationOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={locationOpen}
+                    className="w-full justify-between bg-background"
+                  >
+                    {formData.location || "Select a city..."}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-full p-0" align="start">
+                  <Command>
+                    <CommandInput placeholder="Search cities..." />
+                    <CommandList>
+                      <CommandEmpty>No city found.</CommandEmpty>
+                      <CommandGroup>
+                        {US_CITIES.map((city) => (
+                          <CommandItem
+                            key={city}
+                            value={city}
+                            onSelect={(currentValue) => {
+                              setFormData({ ...formData, location: currentValue });
+                              setLocationOpen(false);
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                formData.location === city ? "opacity-100" : "opacity-0"
+                              )}
+                            />
+                            {city}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
             </div>
 
             <div className="space-y-2">
