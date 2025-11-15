@@ -70,20 +70,26 @@ const ItemDetail = () => {
         return;
       }
 
+      // Check if user owns this item
+      if (item?.user_id === user.id) {
+        toast.error("You cannot request your own item");
+        return;
+      }
+
       // Check if user already made a request for this item
       const { data: existingRequest } = await supabase
         .from('item_requests')
         .select('id')
         .eq('item_id', id)
         .eq('requester_id', user.id)
-        .single();
+        .maybeSingle();
 
       if (existingRequest) {
         toast.info("You already requested this item");
         return;
       }
 
-      // Create the request (this will automatically trigger notification via database trigger)
+      // Create the request (this will automatically trigger notification and conversation via database trigger)
       const { error } = await supabase
         .from('item_requests')
         .insert({
@@ -94,7 +100,10 @@ const ItemDetail = () => {
 
       if (error) throw error;
 
-      toast.success("Request sent! The owner will be notified.");
+      toast.success("Request sent! Check your messages to chat with the owner.");
+      
+      // Navigate to messages after a short delay
+      setTimeout(() => navigate("/messages"), 1500);
     } catch (error) {
       console.error('Error creating request:', error);
       toast.error("Failed to send request");

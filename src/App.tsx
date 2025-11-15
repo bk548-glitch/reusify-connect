@@ -8,6 +8,7 @@ import Browse from "./pages/Browse";
 import Upload from "./pages/Upload";
 import ItemDetail from "./pages/ItemDetail";
 import Auth from "./pages/Auth";
+import Messages from "./pages/Messages";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/browse" element={<Browse />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/item/:id" element={<ItemDetail />} />
+          <Route path="/messages" element={<Messages />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

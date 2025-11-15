@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Bell } from "lucide-react";
+import { Bell, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -92,10 +92,9 @@ export const Notifications = () => {
 
   const handleNotificationClick = async (notification: Notification) => {
     await markAsRead(notification.id);
-    if (notification.item_id) {
-      navigate(`/item/${notification.item_id}`);
-      setOpen(false);
-    }
+    // Navigate to messages page to see the conversation
+    navigate("/messages");
+    setOpen(false);
   };
 
   const formatTime = (dateString: string) => {
@@ -115,7 +114,16 @@ export const Notifications = () => {
   };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <>
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={() => navigate("/messages")}
+        title="Messages"
+      >
+        <MessageSquare className="h-5 w-5" />
+      </Button>
+      <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="h-5 w-5" />
@@ -172,7 +180,8 @@ export const Notifications = () => {
             ))
           )}
         </div>
-      </PopoverContent>
-    </Popover>
+        </PopoverContent>
+      </Popover>
+    </>
   );
 };
