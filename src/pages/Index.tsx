@@ -143,6 +143,58 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Team Section */}
+      <section className="py-20 container mx-auto px-4">
+        <h2 className="text-4xl font-bold text-center mb-12 text-foreground">
+          Team
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          <Card className="text-center">
+            <CardContent className="pt-8 pb-6">
+              <div className="w-32 h-32 bg-muted rounded-full mx-auto mb-4 flex items-center justify-center">
+                <span className="text-4xl text-muted-foreground">BS</span>
+              </div>
+              <h3 className="text-lg font-semibold mb-1">Bhavani Sai</h3>
+              <p className="text-sm text-muted-foreground">Co-founder</p>
+              <p className="text-sm text-muted-foreground">M.Eng in Engineering Management</p>
+            </CardContent>
+          </Card>
+
+          <Card className="text-center">
+            <CardContent className="pt-8 pb-6">
+              <div className="w-32 h-32 bg-muted rounded-full mx-auto mb-4 flex items-center justify-center">
+                <span className="text-4xl text-muted-foreground">BP</span>
+              </div>
+              <h3 className="text-lg font-semibold mb-1">Bill Park</h3>
+              <p className="text-sm text-muted-foreground">Co-founder</p>
+              <p className="text-sm text-muted-foreground">B.A. in Computer Science</p>
+            </CardContent>
+          </Card>
+
+          <Card className="text-center">
+            <CardContent className="pt-8 pb-6">
+              <div className="w-32 h-32 bg-muted rounded-full mx-auto mb-4 flex items-center justify-center">
+                <span className="text-4xl text-muted-foreground">VK</span>
+              </div>
+              <h3 className="text-lg font-semibold mb-1">Vijay Krishnamoorthy</h3>
+              <p className="text-sm text-muted-foreground">Co-founder</p>
+              <p className="text-sm text-muted-foreground">B.A. in Computer Science</p>
+            </CardContent>
+          </Card>
+
+          <Card className="text-center">
+            <CardContent className="pt-8 pb-6">
+              <div className="w-32 h-32 bg-muted rounded-full mx-auto mb-4 flex items-center justify-center">
+                <span className="text-4xl text-muted-foreground">HA</span>
+              </div>
+              <h3 className="text-lg font-semibold mb-1">Himani Agarwal</h3>
+              <p className="text-sm text-muted-foreground">Co-founder</p>
+              <p className="text-sm text-muted-foreground">M.Eng in Engineering Management</p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="py-8 border-t border-border bg-card">
         <div className="container mx-auto px-4 text-center text-muted-foreground">
