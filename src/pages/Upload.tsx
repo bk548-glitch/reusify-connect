@@ -45,9 +45,6 @@ const Upload = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuggestingCategory, setIsSuggestingCategory] = useState(false);
   const [locationOpen, setLocationOpen] = useState(false);
-  const [currentLocation, setCurrentLocation] = useState<string | null>(null);
-  const [locationError, setLocationError] = useState<string | null>(null);
-  const [isGettingLocation, setIsGettingLocation] = useState(true);
 
   useEffect(() => {
     // Set up auth state listener
@@ -75,54 +72,6 @@ const Upload = () => {
     return () => subscription.unsubscribe();
   }, [navigate]);
 
-  useEffect(() => {
-    // Get user's current location
-    if ("geolocation" in navigator) {
-      const watchId = navigator.geolocation.watchPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
-          
-          try {
-            // Reverse geocode to get city and state
-            const response = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
-            );
-            const data = await response.json();
-            
-            const city = data.address.city || data.address.town || data.address.village || data.address.county;
-            const state = data.address.state;
-            
-            if (city && state) {
-              setCurrentLocation(`${city}, ${state}`);
-            } else {
-              setCurrentLocation("Location detected but unable to determine city/state");
-            }
-            setLocationError(null);
-            setIsGettingLocation(false);
-          } catch (error) {
-            console.error("Error reverse geocoding:", error);
-            setLocationError("Unable to determine location details");
-            setIsGettingLocation(false);
-          }
-        },
-        (error) => {
-          setLocationError(error.message);
-          setIsGettingLocation(false);
-          console.error("Error getting location:", error);
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 30000
-        }
-      );
-
-      return () => navigator.geolocation.clearWatch(watchId);
-    } else {
-      setLocationError("Geolocation is not supported by your browser");
-      setIsGettingLocation(false);
-    }
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -377,16 +326,7 @@ const Upload = () => {
             </div>
 
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="location">Location *</Label>
-                {isGettingLocation ? (
-                  <span className="text-xs text-muted-foreground">Detecting...</span>
-                ) : currentLocation ? (
-                  <span className="text-xs text-muted-foreground">📍 {currentLocation}</span>
-                ) : locationError ? (
-                  <span className="text-xs text-destructive">{locationError}</span>
-                ) : null}
-              </div>
+              <Label htmlFor="location">Location *</Label>
               <Popover open={locationOpen} onOpenChange={setLocationOpen}>
                 <PopoverTrigger asChild>
                   <Button
