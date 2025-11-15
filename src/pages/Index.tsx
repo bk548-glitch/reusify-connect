@@ -133,16 +133,8 @@ const Index = () => {
           Impact Metrics
         </h2>
         
-        <div className="max-w-4xl mx-auto mb-16">
-          <h3 className="text-2xl font-semibold mb-8 text-center text-foreground">Impact So Far</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card>
-              <CardContent className="pt-6 pb-6 text-center">
-                <div className="text-3xl font-bold text-primary mb-2">312 kg</div>
-                <div className="text-sm text-muted-foreground">of CO₂ emissions avoided</div>
-              </CardContent>
-            </Card>
-            
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card>
               <CardContent className="pt-6 pb-6 text-center">
                 <div className="text-3xl font-bold text-primary mb-2">147 items</div>
@@ -171,13 +163,6 @@ const Index = () => {
               </CardContent>
             </Card>
           </div>
-        </div>
-
-        <div className="max-w-3xl mx-auto text-center">
-          <h3 className="text-2xl font-semibold mb-4 text-foreground">Why this matters</h3>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            Small actions compound. Every jar, box, container, and scrap of material reused instead of discarded helps reduce emissions, extend product life cycles, and move us toward a circular economy.
-          </p>
         </div>
       </section>
 
