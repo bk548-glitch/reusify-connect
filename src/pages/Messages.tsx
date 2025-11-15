@@ -260,24 +260,25 @@ const Messages = () => {
                               const parts = line.split(urlRegex);
                               return (
                                 <span key={i}>
-                                  {parts.map((part, j) => 
-                                    urlRegex.test(part) ? (
-                                      <a 
-                                        key={j}
-                                        href={part} 
-                                        className="underline hover:opacity-80"
-                                        onClick={(e) => {
-                                          e.preventDefault();
-                                          const url = new URL(part);
-                                          navigate(url.pathname);
-                                        }}
-                                      >
-                                        View Item
-                                      </a>
-                                    ) : (
-                                      part
-                                    )
-                                  )}
+                                  {parts.map((part, j) => {
+                                    if (urlRegex.test(part) && part.includes('/item/')) {
+                                      return (
+                                        <a 
+                                          key={j}
+                                          href={part} 
+                                          className="underline hover:opacity-80"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            const url = new URL(part);
+                                            navigate(url.pathname);
+                                          }}
+                                        >
+                                          View Item
+                                        </a>
+                                      );
+                                    }
+                                    return part;
+                                  })}
                                   {i < message.content.split('\n').length - 1 && <br />}
                                 </span>
                               );
