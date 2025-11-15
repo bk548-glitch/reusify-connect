@@ -14,14 +14,17 @@ serve(async (req) => {
   }
 
   try {
-    const { type, text, imageBase64 } = await req.json();
+    const { type, text, imageBase64, mediaType } = await req.json();
 
-    console.log('Generate content request:', { type, hasText: !!text, hasImage: !!imageBase64 });
+    console.log('Generate content request:', { type, hasText: !!text, hasImage: !!imageBase64, mediaType });
 
     let messages;
 
     if (type === 'image' && imageBase64) {
       // Image analysis using Claude's vision capabilities
+      // Support common image formats: jpeg, png, gif, webp
+      const supportedMediaType = mediaType || 'image/jpeg';
+      
       messages = [
         {
           role: 'user',
@@ -30,7 +33,7 @@ serve(async (req) => {
               type: 'image',
               source: {
                 type: 'base64',
-                media_type: 'image/jpeg',
+                media_type: supportedMediaType,
                 data: imageBase64,
               },
             },

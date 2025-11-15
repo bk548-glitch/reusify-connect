@@ -155,10 +155,14 @@ const Upload = () => {
       reader.readAsDataURL(formData.image);
       
       reader.onload = async () => {
-        const base64 = reader.result?.toString().split(',')[1];
+        const dataUrl = reader.result?.toString();
+        const [header, base64] = dataUrl?.split(',') || [];
+        
+        // Extract media type from data URL (e.g., "data:image/png;base64" -> "image/png")
+        const mediaType = header?.match(/data:(.*?);/)?.[1] || 'image/jpeg';
         
         const { data, error } = await supabase.functions.invoke('generate-content', {
-          body: { type: 'image', imageBase64: base64 }
+          body: { type: 'image', imageBase64: base64, mediaType }
         });
 
         if (error) throw error;
