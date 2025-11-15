@@ -171,6 +171,7 @@ export const US_CITIES = [
   "Albany, NY", "New Rochelle, NY", "Mount Vernon, NY", "Schenectady, NY", "Utica, NY",
   "White Plains, NY", "Hempstead, NY", "Troy, NY", "Niagara Falls, NY", "Binghamton, NY",
   "Freeport, NY", "Valley Stream, NY", "Long Beach, NY", "Spring Valley, NY", "Rome, NY",
+  "Ithaca, NY",
   
   // North Carolina
   "Charlotte, NC", "Raleigh, NC", "Greensboro, NC", "Durham, NC", "Winston-Salem, NC",
