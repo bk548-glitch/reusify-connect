@@ -8,13 +8,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { User, Session } from "@supabase/supabase-js";
-import { Leaf } from "lucide-react";
+import { Leaf, Check, ChevronsUpDown } from "lucide-react";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { US_CITIES } from "@/data/usCities";
+import { cn } from "@/lib/utils";
 
 const Auth = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(false);
+  const [locationOpen, setLocationOpen] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState("");
 
   useEffect(() => {
     // Set up auth state listener
@@ -51,10 +57,15 @@ const Auth = () => {
     const email = formData.get("signup-email") as string;
     const password = formData.get("signup-password") as string;
     const displayName = formData.get("display-name") as string;
-    const location = formData.get("location") as string;
 
     if (!email || !password) {
       toast.error("Please fill in all required fields");
+      setLoading(false);
+      return;
+    }
+
+    if (!selectedLocation) {
+      toast.error("Please select a location");
       setLoading(false);
       return;
     }
@@ -66,7 +77,7 @@ const Auth = () => {
         emailRedirectTo: `${window.location.origin}/`,
         data: {
           display_name: displayName,
-          location: location
+          location: selectedLocation
         }
       }
     });
@@ -191,13 +202,48 @@ const Auth = () => {
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="location">Location</Label>
-                <Input
-                  id="location"
-                  name="location"
-                  type="text"
-                  placeholder="Brooklyn, NY"
-                />
+                <Label htmlFor="location">Location *</Label>
+                <Popover open={locationOpen} onOpenChange={setLocationOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={locationOpen}
+                      className="w-full justify-between"
+                    >
+                      {selectedLocation || "Select city..."}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0 bg-popover" align="start">
+                    <Command className="bg-popover">
+                      <CommandInput placeholder="Search city..." className="h-9" />
+                      <CommandList>
+                        <CommandEmpty>No city found.</CommandEmpty>
+                        <CommandGroup>
+                          {US_CITIES.map((city) => (
+                            <CommandItem
+                              key={city}
+                              value={city}
+                              onSelect={(currentValue) => {
+                                setSelectedLocation(currentValue === selectedLocation ? "" : currentValue);
+                                setLocationOpen(false);
+                              }}
+                            >
+                              {city}
+                              <Check
+                                className={cn(
+                                  "ml-auto h-4 w-4",
+                                  selectedLocation === city ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </div>
               
               <Button type="submit" className="w-full" disabled={loading}>
