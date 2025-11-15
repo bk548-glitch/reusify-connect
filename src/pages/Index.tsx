@@ -6,6 +6,7 @@ import heroImage from "@/assets/hero-reuse.jpg";
 import vijayImage from "@/assets/vijay.jpeg";
 import billImage from "@/assets/bill.jpeg";
 import himaniImage from "@/assets/himani.jpg";
+import bhavaniImage from "@/assets/bhavani.jpeg";
 import { Header } from "@/components/Header";
 
 const Index = () => {
@@ -154,8 +155,12 @@ const Index = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
           <Card className="text-center">
             <CardContent className="pt-8 pb-6">
-              <div className="w-32 h-32 bg-muted rounded-full mx-auto mb-4 flex items-center justify-center">
-                <span className="text-4xl text-muted-foreground">BS</span>
+              <div className="w-32 h-32 rounded-full mx-auto mb-4 overflow-hidden">
+                <img 
+                  src={bhavaniImage} 
+                  alt="Bhavani Sai"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <h3 className="text-lg font-semibold mb-1">Bhavani Sai</h3>
               <p className="text-sm text-muted-foreground">Co-founder</p>
