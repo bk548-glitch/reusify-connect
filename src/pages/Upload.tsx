@@ -196,8 +196,7 @@ const Upload = () => {
 
       setFormData({
         ...formData,
-        description: data.description,
-        category: data.tags[0] || formData.category,
+        description: data.description
       });
       
       toast.success("Description enhanced!");
