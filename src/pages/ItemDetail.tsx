@@ -90,7 +90,7 @@ const ItemDetail = () => {
       }
 
       // Create the request (this will automatically trigger notification and conversation via database trigger)
-      const { error } = await supabase
+      const { error: requestError } = await supabase
         .from('item_requests')
         .insert({
           item_id: id,
@@ -98,7 +98,33 @@ const ItemDetail = () => {
           status: 'pending'
         });
 
-      if (error) throw error;
+      if (requestError) throw requestError;
+
+      // Wait a moment for the database trigger to create the conversation
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // Find the conversation that was just created
+      const { data: conversation } = await supabase
+        .from('conversations')
+        .select('id')
+        .eq('item_id', id)
+        .eq('requester_id', user.id)
+        .single();
+
+      if (conversation) {
+        // Send an automatic initial message from the requester
+        const initialMessage = item?.image_url 
+          ? `Hi, I am interested in the ${item.title}.\n\nItem: ${item.title}\nImage: ${item.image_url}`
+          : `Hi, I am interested in the ${item?.title}.`;
+        
+        await supabase
+          .from('messages')
+          .insert({
+            conversation_id: conversation.id,
+            sender_id: user.id,
+            content: initialMessage
+          });
+      }
 
       toast.success("Request sent! Check your messages to chat with the owner.");
       
