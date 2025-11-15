@@ -95,19 +95,13 @@ const ItemDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-      <header className="sticky top-[57px] z-40 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
-        <div className="container mx-auto px-4 py-4">
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/browse")}
-            className="gap-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Browse
-          </Button>
-        </div>
-      </header>
+      <Header 
+        backButton={{
+          label: "Back to Browse",
+          icon: ArrowLeft,
+          onClick: () => navigate("/browse")
+        }}
+      />
 
       <main className="container mx-auto px-4 py-8 max-w-5xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
