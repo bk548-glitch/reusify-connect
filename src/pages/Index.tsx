@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Recycle, Search, MessageCircle, Heart } from "lucide-react";
 import heroImage from "@/assets/hero-reuse.jpg";
+import vijayImage from "@/assets/vijay.jpeg";
 import { Header } from "@/components/Header";
 
 const Index = () => {
@@ -179,7 +180,7 @@ const Index = () => {
             <CardContent className="pt-8 pb-6">
               <div className="w-32 h-32 rounded-full mx-auto mb-4 overflow-hidden">
                 <img 
-                  src="https://drive.google.com/uc?export=view&id=1HVbyDJONfdLLaTMhEnSsLIAO9yhonKV4" 
+                  src={vijayImage} 
                   alt="Vijay Krishnamoorthy"
                   className="w-full h-full object-cover"
                 />
