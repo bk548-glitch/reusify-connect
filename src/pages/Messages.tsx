@@ -254,7 +254,35 @@ const Messages = () => {
                               : 'bg-accent'
                           }`}
                         >
-                          <p>{message.content}</p>
+                          <p className="whitespace-pre-wrap">
+                            {message.content.split('\n').map((line, i) => {
+                              const urlRegex = /(https?:\/\/[^\s]+)/g;
+                              const parts = line.split(urlRegex);
+                              return (
+                                <span key={i}>
+                                  {parts.map((part, j) => 
+                                    urlRegex.test(part) ? (
+                                      <a 
+                                        key={j}
+                                        href={part} 
+                                        className="underline hover:opacity-80"
+                                        onClick={(e) => {
+                                          e.preventDefault();
+                                          const url = new URL(part);
+                                          navigate(url.pathname);
+                                        }}
+                                      >
+                                        View Item
+                                      </a>
+                                    ) : (
+                                      part
+                                    )
+                                  )}
+                                  {i < message.content.split('\n').length - 1 && <br />}
+                                </span>
+                              );
+                            })}
+                          </p>
                           <p className="text-xs opacity-70 mt-1">
                             {new Date(message.created_at).toLocaleTimeString([], { 
                               hour: '2-digit', 
