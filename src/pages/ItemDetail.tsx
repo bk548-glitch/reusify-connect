@@ -60,8 +60,45 @@ const ItemDetail = () => {
     }
   };
 
-  const handleRequest = () => {
-    toast.success("Request sent! The owner will be notified.");
+  const handleRequest = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast.error("Please log in to request items");
+        navigate("/auth");
+        return;
+      }
+
+      // Check if user already made a request for this item
+      const { data: existingRequest } = await supabase
+        .from('item_requests')
+        .select('id')
+        .eq('item_id', id)
+        .eq('requester_id', user.id)
+        .single();
+
+      if (existingRequest) {
+        toast.info("You already requested this item");
+        return;
+      }
+
+      // Create the request (this will automatically trigger notification via database trigger)
+      const { error } = await supabase
+        .from('item_requests')
+        .insert({
+          item_id: id,
+          requester_id: user.id,
+          status: 'pending'
+        });
+
+      if (error) throw error;
+
+      toast.success("Request sent! The owner will be notified.");
+    } catch (error) {
+      console.error('Error creating request:', error);
+      toast.error("Failed to send request");
+    }
   };
 
   const formatDate = (dateString: string) => {
