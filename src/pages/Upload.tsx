@@ -45,6 +45,8 @@ const Upload = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuggestingCategory, setIsSuggestingCategory] = useState(false);
   const [locationOpen, setLocationOpen] = useState(false);
+  const [currentCoords, setCurrentCoords] = useState<{ latitude: number; longitude: number } | null>(null);
+  const [locationError, setLocationError] = useState<string | null>(null);
 
   useEffect(() => {
     // Set up auth state listener
@@ -71,6 +73,34 @@ const Upload = () => {
 
     return () => subscription.unsubscribe();
   }, [navigate]);
+
+  useEffect(() => {
+    // Get user's current location
+    if ("geolocation" in navigator) {
+      const watchId = navigator.geolocation.watchPosition(
+        (position) => {
+          setCurrentCoords({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          });
+          setLocationError(null);
+        },
+        (error) => {
+          setLocationError(error.message);
+          console.error("Error getting location:", error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0
+        }
+      );
+
+      return () => navigator.geolocation.clearWatch(watchId);
+    } else {
+      setLocationError("Geolocation is not supported by your browser");
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -367,6 +397,29 @@ const Upload = () => {
                   </Command>
                 </PopoverContent>
               </Popover>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Current Device Location</Label>
+              <Card className="p-4 bg-muted/50">
+                {locationError ? (
+                  <p className="text-sm text-destructive">{locationError}</p>
+                ) : currentCoords ? (
+                  <div className="space-y-1">
+                    <p className="text-sm text-muted-foreground">
+                      <span className="font-medium">Latitude:</span> {currentCoords.latitude.toFixed(6)}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      <span className="font-medium">Longitude:</span> {currentCoords.longitude.toFixed(6)}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      📍 Location updates in real-time
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground">Getting your location...</p>
+                )}
+              </Card>
             </div>
 
             <div className="space-y-2">
