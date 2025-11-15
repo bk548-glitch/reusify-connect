@@ -26,7 +26,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-5',
+        model: 'claude-sonnet-4-20250514',
         max_tokens: 2048,
         messages: [
           {
@@ -40,7 +40,8 @@ ${items.map((item: any, idx: number) => `${idx + 1}. ${item.title} - ${item.desc
 
 Task: Analyze the user's query and return the IDs of items that best match their intent, ranked by relevance. Consider semantic meaning, not just keywords.
 
-Return ONLY a JSON array of item IDs in order of relevance, like: [3, 1, 5]
+CRITICAL: Return ONLY a valid JSON array of item IDs in order of relevance, like: [3, 1, 5]
+Do not include any explanatory text, markdown formatting, or backticks. Just the raw JSON array.
 If no items match well, return an empty array: []`
           }
         ]
@@ -58,8 +59,21 @@ If no items match well, return an empty array: []`
     
     console.log('Claude response:', aiResponse);
 
-    // Parse the JSON array from Claude's response
-    const rankedIds = JSON.parse(aiResponse.trim());
+    // Extract JSON array from Claude's response (handle markdown formatting)
+    let jsonText = aiResponse.trim();
+    
+    // Remove markdown code blocks if present
+    if (jsonText.startsWith('```')) {
+      jsonText = jsonText.replace(/```json?\n?/g, '').replace(/```\n?$/g, '');
+    }
+    
+    // Extract array if there's explanatory text
+    const arrayMatch = jsonText.match(/\[[^\]]*\]/);
+    if (arrayMatch) {
+      jsonText = arrayMatch[0];
+    }
+    
+    const rankedIds = JSON.parse(jsonText);
 
     return new Response(JSON.stringify({ rankedIds }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
