@@ -377,7 +377,16 @@ const Upload = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="location">Location *</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="location">Location *</Label>
+                {isGettingLocation ? (
+                  <span className="text-xs text-muted-foreground">Detecting...</span>
+                ) : currentLocation ? (
+                  <span className="text-xs text-muted-foreground">📍 {currentLocation}</span>
+                ) : locationError ? (
+                  <span className="text-xs text-destructive">{locationError}</span>
+                ) : null}
+              </div>
               <Popover open={locationOpen} onOpenChange={setLocationOpen}>
                 <PopoverTrigger asChild>
                   <Button
@@ -419,28 +428,6 @@ const Upload = () => {
                   </Command>
                 </PopoverContent>
               </Popover>
-            </div>
-
-            <div className="space-y-2">
-              <Label>Current Device Location</Label>
-              <Card className="p-4 bg-muted/50">
-                {locationError ? (
-                  <p className="text-sm text-destructive">{locationError}</p>
-                ) : isGettingLocation ? (
-                  <p className="text-sm text-muted-foreground">Detecting your location...</p>
-                ) : currentLocation ? (
-                  <div className="space-y-1">
-                    <p className="text-base font-medium">
-                      📍 {currentLocation}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      Location updates automatically
-                    </p>
-                  </div>
-                ) : (
-                  <p className="text-sm text-muted-foreground">Unable to detect location</p>
-                )}
-              </Card>
             </div>
 
             <div className="space-y-2">
