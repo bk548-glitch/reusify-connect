@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.generate-content]
 verify_jwt = false
+
+[functions.suggest-category]
+verify_jwt = false

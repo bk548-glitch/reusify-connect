@@ -39,6 +39,7 @@ const Upload = () => {
   });
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuggestingCategory, setIsSuggestingCategory] = useState(false);
 
   useEffect(() => {
     // Set up auth state listener
@@ -204,6 +205,58 @@ const Upload = () => {
     }
   };
 
+  const suggestCategory = async () => {
+    if (!formData.title && !formData.image) {
+      toast.error("Please enter a title or upload an image first");
+      return;
+    }
+
+    setIsSuggestingCategory(true);
+    try {
+      let imageBase64 = null;
+      
+      // Convert image to base64 if present
+      if (formData.image) {
+        const reader = new FileReader();
+        await new Promise((resolve) => {
+          reader.onload = () => {
+            imageBase64 = reader.result?.toString().split(',')[1];
+            resolve(null);
+          };
+          reader.readAsDataURL(formData.image);
+        });
+      }
+
+      const { data, error } = await supabase.functions.invoke('suggest-category', {
+        body: { 
+          title: formData.title || null,
+          imageBase64: imageBase64 
+        }
+      });
+
+      if (error) {
+        if (error.message?.includes('429')) {
+          toast.error("Rate limit exceeded. Please try again in a moment.");
+        } else if (error.message?.includes('402')) {
+          toast.error("AI credits exhausted. Please add credits to continue.");
+        } else {
+          throw error;
+        }
+        return;
+      }
+
+      if (data?.category) {
+        setFormData({ ...formData, category: data.category });
+        toast.success(`Category suggested: ${data.category}`);
+      }
+    } catch (error) {
+      console.error('Error suggesting category:', error);
+      toast.error("Failed to suggest category");
+    } finally {
+      setIsSuggestingCategory(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -242,7 +295,20 @@ const Upload = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="category">Category *</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="category">Category *</Label>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={suggestCategory}
+                  disabled={isSuggestingCategory || (!formData.title && !formData.image)}
+                  className="gap-2"
+                >
+                  <Sparkles className="h-4 w-4" />
+                  {isSuggestingCategory ? "AI Suggesting..." : "AI Suggest"}
+                </Button>
+              </div>
               <Select
                 value={formData.category}
                 onValueChange={(value) => setFormData({ ...formData, category: value })}
