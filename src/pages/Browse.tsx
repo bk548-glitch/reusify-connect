@@ -100,19 +100,13 @@ const Browse = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-      <header className="sticky top-[57px] z-40 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
-        <div className="container mx-auto px-4 py-4">
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/")}
-            className="gap-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Home
-          </Button>
-        </div>
-      </header>
+      <Header 
+        backButton={{
+          label: "Back to Home",
+          icon: ArrowLeft,
+          onClick: () => navigate("/")
+        }}
+      />
 
       <main className="container mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold text-foreground mb-8">Browse Materials</h1>
