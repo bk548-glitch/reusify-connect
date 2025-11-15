@@ -127,6 +127,60 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Impact Metrics */}
+      <section className="py-20 container mx-auto px-4">
+        <h2 className="text-4xl font-bold text-center mb-12 text-foreground">
+          Impact Metrics
+        </h2>
+        
+        <div className="max-w-4xl mx-auto mb-16">
+          <h3 className="text-2xl font-semibold mb-8 text-center text-foreground">Impact So Far</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card>
+              <CardContent className="pt-6 pb-6 text-center">
+                <div className="text-3xl font-bold text-primary mb-2">312 kg</div>
+                <div className="text-sm text-muted-foreground">of CO₂ emissions avoided</div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="pt-6 pb-6 text-center">
+                <div className="text-3xl font-bold text-primary mb-2">147 items</div>
+                <div className="text-sm text-muted-foreground">diverted from landfills</div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="pt-6 pb-6 text-center">
+                <div className="text-3xl font-bold text-primary mb-2">63</div>
+                <div className="text-sm text-muted-foreground">successful exchanges facilitated</div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="pt-6 pb-6 text-center">
+                <div className="text-3xl font-bold text-primary mb-2">87%</div>
+                <div className="text-sm text-muted-foreground">of items reused within 48 hours</div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="pt-6 pb-6 text-center">
+                <div className="text-3xl font-bold text-primary mb-2">2.4×</div>
+                <div className="text-sm text-muted-foreground">increase in reuse actions vs traditional platforms</div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        <div className="max-w-3xl mx-auto text-center">
+          <h3 className="text-2xl font-semibold mb-4 text-foreground">Why this matters</h3>
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            Small actions compound. Every jar, box, container, and scrap of material reused instead of discarded helps reduce emissions, extend product life cycles, and move us toward a circular economy.
+          </p>
+        </div>
+      </section>
+
       {/* Impact Section */}
       <section className="py-20 bg-gradient-to-br from-primary/5 to-secondary/5">
         <div className="container mx-auto px-4 text-center max-w-3xl">
@@ -144,6 +198,56 @@ const Index = () => {
           >
             Start Making a Difference
           </Button>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 bg-accent/30">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center mb-12 text-foreground">
+            Testimonials
+          </h2>
+          <h3 className="text-2xl font-semibold text-center mb-12 text-foreground">
+            What Our Early Users Are Saying
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <Card>
+              <CardContent className="pt-8 pb-6">
+                <p className="text-muted-foreground italic mb-4 leading-relaxed">
+                  "I found free moving boxes in minutes. It saved me money and kept perfectly good materials out of the trash."
+                </p>
+                <p className="text-sm font-semibold text-foreground">— Cornell Graduate Student</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="pt-8 pb-6">
+                <p className="text-muted-foreground italic mb-4 leading-relaxed">
+                  "As an artist, I love this. I've gotten jars, fabric, and scrap materials for my projects without buying anything new."
+                </p>
+                <p className="text-sm font-semibold text-foreground">— Maker & Designer</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="pt-8 pb-6">
+                <p className="text-muted-foreground italic mb-4 leading-relaxed">
+                  "I gave away all my old containers through TrashX. It feels good knowing they're being reused instead of thrown away."
+                </p>
+                <p className="text-sm font-semibold text-foreground">— Local Resident</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="pt-8 pb-6">
+                <p className="text-muted-foreground italic mb-4 leading-relaxed">
+                  "The AI search blew my mind — I typed what I needed in plain English and it matched me with what people were giving away."
+                </p>
+                <p className="text-sm font-semibold text-foreground">— Student Researcher</p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
 
