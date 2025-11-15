@@ -61,17 +61,28 @@ const Messages = () => {
 
   const fetchConversations = async () => {
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        navigate("/auth");
+        return;
+      }
+
       const { data, error } = await supabase
         .from('conversations')
         .select(`
           *,
           items:item_id (title),
-          requester_profile:profiles!requester_id (display_name),
-          owner_profile:profiles!owner_id (display_name)
+          requester_profile:profiles!conversations_requester_id_fkey (display_name),
+          owner_profile:profiles!conversations_owner_id_fkey (display_name)
         `)
         .order('updated_at', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Conversation fetch error:', error);
+        throw error;
+      }
+      
+      console.log('Fetched conversations:', data);
       setConversations(data || []);
     } catch (error) {
       console.error('Error fetching conversations:', error);
