@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, MapPin, User, Calendar, Package } from "lucide-react";
+import { ArrowLeft, MapPin, User, Calendar, Package, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Header } from "@/components/Header";
@@ -28,12 +28,19 @@ const ItemDetail = () => {
   const { id } = useParams();
   const [item, setItem] = useState<Item | null>(null);
   const [loading, setLoading] = useState(true);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   useEffect(() => {
+    getCurrentUser();
     if (id) {
       fetchItem();
     }
   }, [id]);
+
+  const getCurrentUser = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    setCurrentUserId(user?.id || null);
+  };
 
   const fetchItem = async () => {
     try {
@@ -133,6 +140,36 @@ const ItemDetail = () => {
     } catch (error) {
       console.error('Error creating request:', error);
       toast.error("Failed to send request");
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!confirm("Are you sure you want to delete this listing? This action cannot be undone.")) {
+      return;
+    }
+
+    try {
+      // Delete image from storage if it exists
+      if (item?.image_url) {
+        const imagePath = item.image_url.split('/').slice(-2).join('/');
+        await supabase.storage
+          .from('item-images')
+          .remove([imagePath]);
+      }
+
+      // Delete the item from database
+      const { error } = await supabase
+        .from('items')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      toast.success("Listing deleted successfully");
+      navigate("/browse");
+    } catch (error) {
+      console.error('Error deleting item:', error);
+      toast.error("Failed to delete listing");
     }
   };
 
@@ -237,17 +274,31 @@ const ItemDetail = () => {
               </CardContent>
             </Card>
 
-            <Button 
-              size="lg" 
-              className="w-full"
-              onClick={handleRequest}
-            >
-              Request This Item
-            </Button>
+            {currentUserId === item.user_id ? (
+              <Button 
+                size="lg" 
+                variant="destructive"
+                className="w-full"
+                onClick={handleDelete}
+              >
+                <Trash2 className="h-4 w-4 mr-2" />
+                Delete This Listing
+              </Button>
+            ) : (
+              <>
+                <Button 
+                  size="lg" 
+                  className="w-full"
+                  onClick={handleRequest}
+                >
+                  Request This Item
+                </Button>
 
-            <p className="text-sm text-muted-foreground text-center">
-              Your request will be sent to the owner. They'll contact you with pickup details.
-            </p>
+                <p className="text-sm text-muted-foreground text-center">
+                  Your request will be sent to the owner. They'll contact you with pickup details.
+                </p>
+              </>
+            )}
           </div>
         </div>
       </main>
