@@ -25,51 +25,99 @@ const categories = [
 const mockItems = [
   {
     id: 1,
-    title: "Vintage Wooden Chair",
-    category: "Furniture",
-    location: "Brooklyn, NY",
-    image: "https://images.unsplash.com/photo-1503602642458-232111445657?w=400",
-    description: "Beautiful vintage chair in good condition"
+    title: "Leftover Plywood Sheets",
+    category: "Building Materials",
+    location: "Brooklyn Construction Site",
+    image: "https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=400",
+    description: "20+ sheets of 3/4\" plywood from residential project. Good condition, some minor cuts."
   },
   {
     id: 2,
-    title: "Fabric Scraps Bundle",
-    category: "Textiles",
-    location: "Manhattan, NY",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400",
-    description: "Various colorful fabric pieces perfect for crafts"
+    title: "Lab Equipment - Beakers & Glassware",
+    category: "Other",
+    location: "NYU Chemistry Lab",
+    image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400",
+    description: "College clearing old lab equipment. Various beakers, test tubes, and lab glassware."
   },
   {
     id: 3,
-    title: "Reclaimed Wood Planks",
+    title: "Metal Sheet Offcuts",
     category: "Building Materials",
-    location: "Queens, NY",
-    image: "https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=400",
-    description: "Solid wood planks from old barn"
+    location: "Queens Manufacturing Plant",
+    image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400",
+    description: "Aluminum and steel sheet offcuts from manufacturing. Perfect for small projects."
   },
   {
     id: 4,
-    title: "Art Supply Collection",
-    category: "Art Supplies",
-    location: "Bronx, NY",
-    image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400",
-    description: "Paint, brushes, and canvases"
+    title: "Fabric Remnants - Designer Textiles",
+    category: "Textiles",
+    location: "Manhattan Fashion District",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400",
+    description: "High-quality fabric scraps from garment production. Great for quilting, crafts, upholstery."
   },
   {
     id: 5,
-    title: "Kitchen Utensils Set",
-    category: "Kitchen Items",
-    location: "Staten Island, NY",
-    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400",
-    description: "Complete set of kitchen tools"
+    title: "Reclaimed Wood Pallets",
+    category: "Building Materials",
+    location: "Bronx Warehouse",
+    image: "https://images.unsplash.com/photo-1601366315781-1495e0bc9461?w=400",
+    description: "Clean wooden pallets ready for upcycling into furniture or garden projects."
   },
   {
     id: 6,
-    title: "Children's Books",
+    title: "Office Furniture - Desks & Chairs",
+    category: "Furniture",
+    location: "Manhattan Office Building",
+    image: "https://images.unsplash.com/photo-1503602642458-232111445657?w=400",
+    description: "Company downsizing. Quality office chairs and desks available for nonprofits/schools."
+  },
+  {
+    id: 7,
+    title: "Paint & Art Supplies",
+    category: "Art Supplies",
+    location: "Brooklyn Art Studio",
+    image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400",
+    description: "Artist clearing studio. Acrylic paints, brushes, canvases, and other supplies."
+  },
+  {
+    id: 8,
+    title: "Kitchen Appliances",
+    category: "Electronics",
+    location: "Staten Island",
+    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400",
+    description: "Moving sale - microwave, toaster, blender, coffee maker. All working condition."
+  },
+  {
+    id: 9,
+    title: "PVC Pipes & Fittings",
+    category: "Building Materials",
+    location: "Queens Plumbing Supply",
+    image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400",
+    description: "Leftover plumbing materials from construction jobs. Various sizes and fittings."
+  },
+  {
+    id: 10,
+    title: "Textbooks & Educational Materials",
     category: "Books",
-    location: "Brooklyn, NY",
+    location: "Columbia University",
     image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400",
-    description: "Collection of kids books in great condition"
+    description: "College library donation. Science, math, and engineering textbooks available for schools."
+  },
+  {
+    id: 11,
+    title: "Ceramic Tiles - Various Colors",
+    category: "Building Materials",
+    location: "Brooklyn Renovation Site",
+    image: "https://images.unsplash.com/photo-1615873968403-89e068629265?w=400",
+    description: "Leftover ceramic tiles from bathroom renovation. Mix of colors and patterns."
+  },
+  {
+    id: 12,
+    title: "Electronics - Computers & Monitors",
+    category: "Electronics",
+    location: "Manhattan Tech Company",
+    image: "https://images.unsplash.com/photo-1547082299-de196ea013d6?w=400",
+    description: "Tech company upgrade. Working desktops and monitors available for nonprofits."
   }
 ];
 
