@@ -101,7 +101,7 @@ const Browse = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <header className="border-b border-border bg-card">
+      <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
         <div className="container mx-auto px-4 py-4">
           <Button
             variant="ghost"
