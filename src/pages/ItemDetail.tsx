@@ -224,45 +224,6 @@ const ItemDetail = () => {
             </p>
           </div>
         </div>
-
-        <div className="mt-12">
-          <h2 className="text-2xl font-bold mb-6">Similar Items</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card className="overflow-hidden cursor-pointer transition-all hover:shadow-lg">
-              <img
-                src="https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=400"
-                alt="Similar item"
-                className="w-full aspect-video object-cover"
-              />
-              <CardContent className="p-4">
-                <h3 className="font-semibold">Oak Dining Table</h3>
-                <p className="text-sm text-muted-foreground">Manhattan, NY</p>
-              </CardContent>
-            </Card>
-            <Card className="overflow-hidden cursor-pointer transition-all hover:shadow-lg">
-              <img
-                src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=400"
-                alt="Similar item"
-                className="w-full aspect-video object-cover"
-              />
-              <CardContent className="p-4">
-                <h3 className="font-semibold">Wooden Bookshelf</h3>
-                <p className="text-sm text-muted-foreground">Queens, NY</p>
-              </CardContent>
-            </Card>
-            <Card className="overflow-hidden cursor-pointer transition-all hover:shadow-lg">
-              <img
-                src="https://images.unsplash.com/photo-1551298370-9d3d53740c72?w=400"
-                alt="Similar item"
-                className="w-full aspect-video object-cover"
-              />
-              <CardContent className="p-4">
-                <h3 className="font-semibold">Vintage Cabinet</h3>
-                <p className="text-sm text-muted-foreground">Bronx, NY</p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
       </main>
     </div>
   );
