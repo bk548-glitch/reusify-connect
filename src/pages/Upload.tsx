@@ -6,8 +6,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, Upload as UploadIcon } from "lucide-react";
+import { ArrowLeft, Upload as UploadIcon, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const categories = [
   "Furniture",
@@ -31,6 +32,7 @@ const Upload = () => {
     location: "",
     image: null as File | null
   });
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,6 +49,74 @@ const Upload = () => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFormData({ ...formData, image: e.target.files[0] });
+    }
+  };
+
+  const generateFromImage = async () => {
+    if (!formData.image) {
+      toast.error("Please upload an image first");
+      return;
+    }
+
+    setIsGenerating(true);
+    try {
+      // Convert image to base64
+      const reader = new FileReader();
+      reader.readAsDataURL(formData.image);
+      
+      reader.onload = async () => {
+        const base64 = reader.result?.toString().split(',')[1];
+        
+        const { data, error } = await supabase.functions.invoke('generate-content', {
+          body: { type: 'image', imageBase64: base64 }
+        });
+
+        if (error) throw error;
+
+        setFormData({
+          ...formData,
+          description: data.description,
+          category: data.tags[0] || formData.category,
+        });
+        
+        toast.success("Description generated from image!");
+      };
+    } catch (error) {
+      console.error('Error generating from image:', error);
+      toast.error("Failed to generate content from image");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const enhanceDescription = async () => {
+    if (!formData.description && !formData.title) {
+      toast.error("Please provide some text to enhance");
+      return;
+    }
+
+    setIsGenerating(true);
+    try {
+      const text = formData.description || formData.title;
+      
+      const { data, error } = await supabase.functions.invoke('generate-content', {
+        body: { type: 'text', text }
+      });
+
+      if (error) throw error;
+
+      setFormData({
+        ...formData,
+        description: data.description,
+        category: data.tags[0] || formData.category,
+      });
+      
+      toast.success("Description enhanced!");
+    } catch (error) {
+      console.error('Error enhancing description:', error);
+      toast.error("Failed to enhance description");
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -118,7 +188,20 @@ const Upload = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="description">Description</Label>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={enhanceDescription}
+                  disabled={isGenerating}
+                  className="gap-2"
+                >
+                  <Sparkles className="h-3 w-3" />
+                  {isGenerating ? "Generating..." : "Enhance with AI"}
+                </Button>
+              </div>
               <Textarea
                 id="description"
                 placeholder="Tell us more about the item, its condition, dimensions, etc."
@@ -141,9 +224,22 @@ const Upload = () => {
                 <UploadIcon className="h-5 w-5 text-muted-foreground" />
               </div>
               {formData.image && (
-                <p className="text-sm text-muted-foreground">
-                  Selected: {formData.image.name}
-                </p>
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">
+                    Selected: {formData.image.name}
+                  </p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={generateFromImage}
+                    disabled={isGenerating}
+                    className="gap-2 w-full"
+                  >
+                    <Sparkles className="h-3 w-3" />
+                    {isGenerating ? "Analyzing..." : "Generate from Image"}
+                  </Button>
+                </div>
               )}
             </div>
 
