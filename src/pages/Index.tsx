@@ -3,12 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Recycle, Search, MessageCircle, Heart } from "lucide-react";
 import heroImage from "@/assets/hero-reuse.jpg";
+import { Header } from "@/components/Header";
 
 const Index = () => {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       {/* Hero Section */}
       <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
         <div 

@@ -10,6 +10,7 @@ import { ArrowLeft, Upload as UploadIcon, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { User, Session } from "@supabase/supabase-js";
+import { Header } from "@/components/Header";
 
 const categories = [
   "Furniture",
@@ -205,6 +206,7 @@ const Upload = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       <header className="border-b border-border bg-card">
         <div className="container mx-auto px-4 py-4">
           <Button
