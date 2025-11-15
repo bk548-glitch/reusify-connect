@@ -19,7 +19,7 @@ const categories = [
   "Tools",
   "Books",
   "Toys",
-  "Other"
+  "Other",
 ];
 
 const mockItems = [
@@ -29,8 +29,8 @@ const mockItems = [
     category: "Building Materials",
     location: "Brooklyn Construction Site",
     image: "https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=400",
-    description: "20+ sheets of 3/4\" plywood from residential project. Good condition, some minor cuts.",
-    quantity: "20 sheets"
+    description: '20+ sheets of 3/4" plywood from residential project. Good condition, some minor cuts.',
+    quantity: "20 sheets",
   },
   {
     id: 2,
@@ -38,8 +38,9 @@ const mockItems = [
     category: "Other",
     location: "NYU Chemistry Lab",
     image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400",
-    description: "College clearing old lab equipment. 50+ glass beakers (various sizes), 30 test tubes, 15 glass jars with lids.",
-    quantity: "50+ beakers, 30 test tubes, 15 jars"
+    description:
+      "College clearing old lab equipment. 50+ glass beakers (various sizes), 30 test tubes, 15 glass jars with lids.",
+    quantity: "50+ beakers, 30 test tubes, 15 jars",
   },
   {
     id: 3,
@@ -47,8 +48,9 @@ const mockItems = [
     category: "Building Materials",
     location: "Queens Manufacturing Plant",
     image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400",
-    description: "Aluminum and steel sheet offcuts from manufacturing. Perfect for small projects. 100+ pieces available.",
-    quantity: "100+ pieces"
+    description:
+      "Aluminum and steel sheet offcuts from manufacturing. Perfect for small projects. 100+ pieces available.",
+    quantity: "100+ pieces",
   },
   {
     id: 4,
@@ -56,8 +58,9 @@ const mockItems = [
     category: "Textiles",
     location: "Manhattan Fashion District",
     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400",
-    description: "High-quality fabric scraps from garment production. Great for quilting, crafts, upholstery. 200+ yards total.",
-    quantity: "200+ yards"
+    description:
+      "High-quality fabric scraps from garment production. Great for quilting, crafts, upholstery. 200+ yards total.",
+    quantity: "200+ yards",
   },
   {
     id: 5,
@@ -66,7 +69,7 @@ const mockItems = [
     location: "Bronx Warehouse",
     image: "https://images.unsplash.com/photo-1601366315781-1495e0bc9461?w=400",
     description: "Clean wooden pallets ready for upcycling into furniture or garden projects. 50 pallets available.",
-    quantity: "50 pallets"
+    quantity: "50 pallets",
   },
   {
     id: 6,
@@ -75,7 +78,7 @@ const mockItems = [
     location: "Manhattan Office Building",
     image: "https://images.unsplash.com/photo-1503602642458-232111445657?w=400",
     description: "Company downsizing. 25 quality office chairs and 15 desks available for nonprofits/schools.",
-    quantity: "25 chairs, 15 desks"
+    quantity: "25 chairs, 15 desks",
   },
   {
     id: 7,
@@ -83,8 +86,9 @@ const mockItems = [
     category: "Art Supplies",
     location: "Brooklyn Art Studio",
     image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400",
-    description: "Artist clearing studio. 40+ tubes of acrylic paints, 20 brushes, 10 blank canvases, and other supplies.",
-    quantity: "40+ paint tubes, 20 brushes, 10 canvases"
+    description:
+      "Artist clearing studio. 40+ tubes of acrylic paints, 20 brushes, 10 blank canvases, and other supplies.",
+    quantity: "40+ paint tubes, 20 brushes, 10 canvases",
   },
   {
     id: 8,
@@ -93,7 +97,7 @@ const mockItems = [
     location: "Staten Island",
     image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400",
     description: "Moving sale - 2 microwaves, 3 toasters, 2 blenders, 4 coffee makers. All working condition.",
-    quantity: "11 appliances total"
+    quantity: "11 appliances total",
   },
   {
     id: 9,
@@ -102,7 +106,7 @@ const mockItems = [
     location: "Queens Plumbing Supply",
     image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400",
     description: "Leftover plumbing materials from construction jobs. Various sizes and fittings. 200+ feet of pipe.",
-    quantity: "200+ feet"
+    quantity: "200+ feet",
   },
   {
     id: 10,
@@ -111,7 +115,7 @@ const mockItems = [
     location: "Columbia University",
     image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400",
     description: "College library donation. 300+ science, math, and engineering textbooks available for schools.",
-    quantity: "300+ books"
+    quantity: "300+ books",
   },
   {
     id: 11,
@@ -120,7 +124,7 @@ const mockItems = [
     location: "Brooklyn Renovation Site",
     image: "https://images.unsplash.com/photo-1615873968403-89e068629265?w=400",
     description: "Leftover ceramic tiles from bathroom renovation. Mix of colors and patterns. 500+ tiles.",
-    quantity: "500+ tiles"
+    quantity: "500+ tiles",
   },
   {
     id: 12,
@@ -129,7 +133,7 @@ const mockItems = [
     location: "Manhattan Tech Company",
     image: "https://images.unsplash.com/photo-1547082299-de196ea013d6?w=400",
     description: "Tech company upgrade. 30 working desktops and 40 monitors available for nonprofits.",
-    quantity: "30 computers, 40 monitors"
+    quantity: "30 computers, 40 monitors",
   },
   {
     id: 13,
@@ -137,8 +141,9 @@ const mockItems = [
     category: "Kitchen Items",
     location: "Queens Restaurant Supply",
     image: "https://images.unsplash.com/photo-1505944357793-35f4ed44a0b0?w=400",
-    description: "Restaurant closing. 100+ glass jars with lids (various sizes from 8oz to 32oz). Perfect for storage, canning, or crafts.",
-    quantity: "100+ glass jars"
+    description:
+      "Restaurant closing. 100+ glass jars with lids (various sizes from 8oz to 32oz). Perfect for storage, canning, or crafts.",
+    quantity: "100+ glass jars",
   },
   {
     id: 14,
@@ -147,7 +152,7 @@ const mockItems = [
     location: "Brooklyn Shipping Warehouse",
     image: "https://images.unsplash.com/photo-1605900283622-b38b9c3c5c4f?w=400",
     description: "Moving boxes, bubble wrap, packing paper. 200+ boxes in various sizes, great for moving or storage.",
-    quantity: "200+ boxes"
+    quantity: "200+ boxes",
   },
   {
     id: 15,
@@ -156,7 +161,7 @@ const mockItems = [
     location: "Bronx Garden Center",
     image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400",
     description: "Nursery clearance. 150+ plastic and ceramic plant pots, trays, soil bags, and garden tools.",
-    quantity: "150+ pots"
+    quantity: "150+ pots",
   },
   {
     id: 16,
@@ -165,7 +170,7 @@ const mockItems = [
     location: "Manhattan Electrician",
     image: "https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=400",
     description: "Leftover from commercial projects. 1000+ feet of copper wire, outlets, switches, and junction boxes.",
-    quantity: "1000+ feet wire"
+    quantity: "1000+ feet wire",
   },
   {
     id: 17,
@@ -173,8 +178,9 @@ const mockItems = [
     category: "Textiles",
     location: "Queens Furniture Shop",
     image: "https://images.unsplash.com/photo-1567016546367-1dfdc8b43fe9?w=400",
-    description: "Furniture maker retiring. High-density foam, batting, upholstery fabric, and tools. 50+ sheets of foam.",
-    quantity: "50+ foam sheets"
+    description:
+      "Furniture maker retiring. High-density foam, batting, upholstery fabric, and tools. 50+ sheets of foam.",
+    quantity: "50+ foam sheets",
   },
   {
     id: 18,
@@ -183,7 +189,7 @@ const mockItems = [
     location: "Staten Island Home",
     image: "https://images.unsplash.com/photo-1590337075489-a48f4c7c4394?w=400",
     description: "Downsizing. 60 vintage mason jars with lids and rings. Various sizes, perfect for canning or crafts.",
-    quantity: "60 mason jars"
+    quantity: "60 mason jars",
   },
   {
     id: 19,
@@ -192,7 +198,7 @@ const mockItems = [
     location: "Brooklyn Construction Site",
     image: "https://images.unsplash.com/photo-1542810634-71277d95dcbb?w=400",
     description: "Project surplus. Clean, straight 2x4s and 2x6s in 8ft and 10ft lengths. 300+ pieces total.",
-    quantity: "300+ pieces"
+    quantity: "300+ pieces",
   },
   {
     id: 20,
@@ -200,9 +206,10 @@ const mockItems = [
     category: "Other",
     location: "Pratt Institute Science Lab",
     image: "https://images.unsplash.com/photo-1578594002389-7f751f62f3a1?w=400",
-    description: "College lab upgrade. 25 glass beakers, 20 flasks, 30 graduated cylinders, 40 petri dishes, 15 glass storage jars.",
-    quantity: "25 beakers, 15 jars, more"
-  }
+    description:
+      "College lab upgrade. 25 glass beakers, 20 flasks, 30 graduated cylinders, 40 petri dishes, 15 glass storage jars.",
+    quantity: "25 beakers, 15 jars, more",
+  },
 ];
 
 const Browse = () => {
@@ -218,18 +225,18 @@ const Browse = () => {
       toast({
         title: "Enter a search query",
         description: "Please type what you're looking for",
-        variant: "destructive"
+        variant: "destructive",
       });
       return;
     }
 
     setIsAiSearching(true);
     try {
-      const { data, error } = await supabase.functions.invoke('ai-search', {
-        body: { 
+      const { data, error } = await supabase.functions.invoke("ai-search", {
+        body: {
           query: searchQuery,
-          items: mockItems 
-        }
+          items: mockItems,
+        },
       });
 
       if (error) throw error;
@@ -237,14 +244,14 @@ const Browse = () => {
       setAiRankedIds(data.rankedIds || []);
       toast({
         title: "AI Search Complete",
-        description: `Found ${data.rankedIds?.length || 0} relevant items`
+        description: `Found ${data.rankedIds?.length || 0} relevant items`,
       });
     } catch (error) {
-      console.error('AI search error:', error);
+      console.error("AI search error:", error);
       toast({
         title: "Search failed",
         description: "Could not complete AI search. Try again.",
-        variant: "destructive"
+        variant: "destructive",
       });
     } finally {
       setIsAiSearching(false);
@@ -252,27 +259,30 @@ const Browse = () => {
   };
 
   const filteredItems = (() => {
-    let items = mockItems.filter(item => {
+    let items = mockItems.filter((item) => {
       const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
       return matchesCategory;
     });
 
     // If AI search has results, sort by AI ranking
     if (aiRankedIds.length > 0) {
-      items = items.sort((a, b) => {
-        const aIndex = aiRankedIds.indexOf(a.id);
-        const bIndex = aiRankedIds.indexOf(b.id);
-        
-        if (aIndex === -1 && bIndex === -1) return 0;
-        if (aIndex === -1) return 1;
-        if (bIndex === -1) return -1;
-        return aIndex - bIndex;
-      }).filter(item => aiRankedIds.includes(item.id));
+      items = items
+        .sort((a, b) => {
+          const aIndex = aiRankedIds.indexOf(a.id);
+          const bIndex = aiRankedIds.indexOf(b.id);
+
+          if (aIndex === -1 && bIndex === -1) return 0;
+          if (aIndex === -1) return 1;
+          if (bIndex === -1) return -1;
+          return aIndex - bIndex;
+        })
+        .filter((item) => aiRankedIds.includes(item.id));
     } else if (searchQuery) {
       // Regular keyword search
-      items = items.filter(item => 
-        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.description.toLowerCase().includes(searchQuery.toLowerCase())
+      items = items.filter(
+        (item) =>
+          item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.description.toLowerCase().includes(searchQuery.toLowerCase()),
       );
     }
 
@@ -284,17 +294,11 @@ const Browse = () => {
       <header className="border-b border-border bg-card sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between mb-4">
-            <Button
-              variant="ghost"
-              onClick={() => navigate("/")}
-              className="gap-2"
-            >
+            <Button variant="ghost" onClick={() => navigate("/")} className="gap-2">
               <ArrowLeft className="h-4 w-4" />
               Back to Home
             </Button>
-            <Button onClick={() => navigate("/upload")}>
-              List an Item
-            </Button>
+            <Button onClick={() => navigate("/upload")}>List an Item</Button>
           </div>
 
           <div className="flex gap-2 mb-4">
@@ -307,15 +311,11 @@ const Browse = () => {
                   setSearchQuery(e.target.value);
                   setAiRankedIds([]);
                 }}
-                onKeyDown={(e) => e.key === 'Enter' && handleAiSearch()}
+                onKeyDown={(e) => e.key === "Enter" && handleAiSearch()}
                 className="pl-10"
               />
             </div>
-            <Button 
-              onClick={handleAiSearch}
-              disabled={isAiSearching}
-              className="gap-2"
-            >
+            <Button onClick={handleAiSearch} disabled={isAiSearching} className="gap-2">
               <Sparkles className="h-4 w-4" />
               {isAiSearching ? "Searching..." : "AI Search"}
             </Button>
@@ -340,7 +340,7 @@ const Browse = () => {
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-foreground mb-2">Browse Materials</h1>
           <p className="text-muted-foreground">
-            {filteredItems.length} {filteredItems.length === 1 ? 'item' : 'items'} available
+            {filteredItems.length} {filteredItems.length === 1 ? "item" : "items"} available
           </p>
         </div>
 
@@ -360,9 +360,7 @@ const Browse = () => {
               </div>
               <CardContent className="p-4">
                 <h3 className="font-semibold text-lg text-foreground mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                  {item.description}
-                </p>
+                <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{item.description}</p>
                 <div className="flex items-center justify-between">
                   <Badge variant="secondary">{item.category}</Badge>
                   <div className="flex items-center gap-1 text-sm text-muted-foreground">
@@ -377,9 +375,7 @@ const Browse = () => {
 
         {filteredItems.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-muted-foreground text-lg">
-              No items found. Try adjusting your filters or search query.
-            </p>
+            <p className="text-muted-foreground text-lg">No items found. Try adjusting your filters or search query.</p>
           </div>
         )}
       </main>
