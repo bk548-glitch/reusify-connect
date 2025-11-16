@@ -58,14 +58,17 @@ const Index = () => {
         </div>
         
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-          <div className="text-2xl md:text-3xl font-semibold text-primary-foreground/80 mb-3">
+          <h1 className="text-6xl md:text-7xl font-bold text-primary-foreground mb-4">
             TrashX
-          </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-primary-foreground mb-6">
-            Turn Waste Into Worth
           </h1>
+          <div className="text-2xl md:text-3xl font-semibold text-primary-foreground/90 mb-6">
+            eBay, but for Waste
+          </div>
+          <p className="text-lg md:text-xl text-primary-foreground/80 mb-3">
+            Turn Waste Into Worth
+          </p>
           <p className="text-xl md:text-2xl text-primary-foreground/90 mb-8 leading-relaxed">
-            Connect materials with makers. Give usable items a second life instead of sending them to landfills.
+            Connect materials with people who need them. Give usable items a second life instead of sending them to landfills.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
