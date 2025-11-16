@@ -58,6 +58,9 @@ const Index = () => {
         </div>
         
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+          <div className="text-2xl md:text-3xl font-semibold text-primary-foreground/80 mb-3">
+            TrashX
+          </div>
           <h1 className="text-5xl md:text-6xl font-bold text-primary-foreground mb-6">
             Turn Waste Into Worth
           </h1>
